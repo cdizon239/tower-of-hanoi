@@ -3,6 +3,11 @@
 body {
   font-family: "Circular Book", sans-serif;
   background-color: #f9efed;
+  text-align: center;
+}
+.container {
+  background-color: #e9ccbe;
+  margin: 0 auto;
 }
 
 h1 {
