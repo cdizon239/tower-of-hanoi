@@ -11,10 +11,16 @@ let towers = [{name: 'towerOne', discs: []},
 let towerOne = document.querySelector('#towerOne')
 let towerTwo = document.querySelector('#towerTwo')
 let towerThree = document.querySelector('#towerThree')
+let winMessage = document.querySelector('#winMessage')
 
 //  INITIALIZE GAMESPACE AND DISCS
 const initGameSpace = () => {
-  //  clear initial stuff
+  moves = 0
+  document.querySelector(`#moves`).innerText = `Moves: ${moves}`
+  towers = [{name: 'towerOne', discs: []},
+  {name: 'towerTwo', discs: []},
+  {name: 'towerThree', discs:[]}]
+
   document.querySelectorAll('.tower-top').forEach(tower => {
     tower.innerHTML = ''
     let discs = document.createElement('ul')
@@ -88,7 +94,7 @@ const checkForWinAndNextSteps = () => {
   let fullTower = towers.filter(tower => 
     tower.name !== 'towerOne' && tower.discs.length === totalNumDiscs)
   if (fullTower.length > 0) {
-    alert('YAYYYY')
+    winMessage.style.display = 'block'
   }
 }
 
@@ -106,8 +112,6 @@ const towerClickHandler = (e) => {
 }
 
 const restartBtnClicked = (e) => {
-  moves = 0
-  document.querySelector(`#moves`).innerText = `Moves: ${moves}`
   initGameSpace();
 }
 
@@ -116,3 +120,7 @@ towerOne.addEventListener('click', towerClickHandler)
 towerTwo.addEventListener('click', towerClickHandler)
 towerThree.addEventListener('click', towerClickHandler)
 document.querySelector('#restartBtn').addEventListener('click', restartBtnClicked)
+document.querySelector('#closeWinMessage').addEventListener('click', () => {
+  winMessage.style.display = 'none'
+  initGameSpace();
+})
