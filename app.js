@@ -14,7 +14,9 @@ let towerThree = document.querySelector('#towerThree')
 
 //  INITIALIZE GAMESPACE AND DISCS
 const initGameSpace = () => {
+  //  clear initial stuff
   document.querySelectorAll('.tower-top').forEach(tower => {
+    tower.innerHTML = ''
     let discs = document.createElement('ul')
     discs.classList.add('discs')
     tower.append(discs)
@@ -29,7 +31,6 @@ const initGameSpace = () => {
     towerOne.querySelector('ul').append(disc)
   }
 
-  //  create restart button
 }
 
 const isEmptyTower = (towerName) => {
@@ -104,7 +105,14 @@ const towerClickHandler = (e) => {
   }
 }
 
+const restartBtnClicked = (e) => {
+  moves = 0
+  document.querySelector(`#moves`).innerText = `Moves: ${moves}`
+  initGameSpace();
+}
+
 initGameSpace();
 towerOne.addEventListener('click', towerClickHandler)
 towerTwo.addEventListener('click', towerClickHandler)
 towerThree.addEventListener('click', towerClickHandler)
+document.querySelector('#restartBtn').addEventListener('click', restartBtnClicked)
