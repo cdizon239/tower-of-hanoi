@@ -74,8 +74,8 @@ ul {
 .button {
   background-color: #5b5861;
   color: white;
-  width: 170px;
   max-height: 45px;
+  max-width: 170px;
   font-family: Circular Book, Arial, sans-serif;
   font-size: 16px;
   padding: 12px 24px;
@@ -83,11 +83,13 @@ ul {
   box-shadow: 0px 1px 1px rgba(0, 87, 125, 0.1),
     0px 1px 2px rgba(0, 87, 125, 0.14);
   border-radius: 4px;
-  margin: 0 auto;
+  /* margin: 0 auto; */
 }
 
 .gameOptions {
-  margin-top: 2%;
+  display: flex;
+  justify-content: space-between;
+  margin: 2% 5%;
 }
 
 #winMessage {
@@ -102,6 +104,14 @@ ul {
   display: none;
 }
 
+#generateNumDiscs input {
+  padding: 10px;
+  border: none;
+  color: #303c41;
+  font-size: 24px;
+  text-align: center;
+  width: 20%;
+}
 .card {
   display: flex;
   background: #ffffff;
@@ -116,4 +126,9 @@ ul {
   margin: 150px auto;
   overflow: auto;
   flex-direction: column;
+}
+
+form {
+  display: flex;
+  align-items: center;
 }

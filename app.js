@@ -1,7 +1,7 @@
 //  GAME DEFAULTS AND STATS
 let moves = 0
 let selectedTowers = []
-let totalNumDiscs = 3
+// let totalNumDiscs = 3
 let maxDiscWidth = 18
 let towers = [{name: 'towerOne', discs: []},
   {name: 'towerTwo', discs: []},
@@ -12,10 +12,12 @@ let towerOne = document.querySelector('#towerOne')
 let towerTwo = document.querySelector('#towerTwo')
 let towerThree = document.querySelector('#towerThree')
 let winMessage = document.querySelector('#winMessage')
+let totalNumDiscs = document.querySelector('#numDiscs').value
 
 //  INITIALIZE GAMESPACE AND DISCS
 const initGameSpace = () => {
   moves = 0
+  
   document.querySelector(`#moves`).innerText = `Moves: ${moves}`
   towers = [{name: 'towerOne', discs: []},
   {name: 'towerTwo', discs: []},
@@ -58,10 +60,10 @@ const checkMoveIfValid = (towerA, towerB) => {
   let fromDisk = grabTopmostDisc(towerA) || 0
   let toDisk = grabTopmostDisc(towerB) || 0
   if ((fromDisk < toDisk || isEmptyTower(towerB)) && !isEmptyTower(towerA)) {
-    console.log('move from',fromDisk,'to',toDisk,' can move');
+    // console.log('move from',fromDisk,'to',toDisk,' can move');
     return true
   } else {
-    console.log('move from',fromDisk,'to',toDisk,' not valid');
+    // console.log('move from',fromDisk,'to',toDisk,' not valid');
     return false
   }
 }
@@ -101,7 +103,6 @@ const checkForWinAndNextSteps = () => {
 const towerClickHandler = (e) => {
   let selectedTower = e.currentTarget.id
   selectedTowers.push(selectedTower)
-  console.log(selectedTowers, grabTopmostDisc(selectedTower));
   if (selectedTowers.length === 2) {
     if(checkMoveIfValid(selectedTowers[0],selectedTowers[1])) {
       move(selectedTowers[0],selectedTowers[1])
@@ -123,4 +124,9 @@ document.querySelector('#restartBtn').addEventListener('click', restartBtnClicke
 document.querySelector('#closeWinMessage').addEventListener('click', () => {
   winMessage.style.display = 'none'
   initGameSpace();
+})
+document.querySelector('#generateNumDiscs').addEventListener('submit', (e) => {
+  e.preventDefault()
+  totalNumDiscs = document.querySelector('#numDiscs').value
+  initGameSpace()
 })
