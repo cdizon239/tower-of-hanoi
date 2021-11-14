@@ -106,6 +106,7 @@ const checkForWinAndNextSteps = () => {
   // record score and prompt use they won the round
   if (fullTower.length > 0) {
     // add to number of rounds won, with right disc number
+    // if disc number not in winRecord yet, then push it to the list
     if (winRecord.filter(discCategory => discCategory.numDiscs == totalNumDiscs).length === 0) {
       let newCategory = {numDiscs: Number(`${totalNumDiscs}`), roundsSolved: 0}
       winRecord.push(newCategory)}
