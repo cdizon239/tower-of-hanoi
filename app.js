@@ -2,6 +2,9 @@
 let moves = 0
 let selectedTowers = []
 // let totalNumDiscs = 3
+let winRecord = [{numDiscs:3, roundsSolved: 0},
+    {numDiscs:4, roundsSolved: 0},
+    {numDiscs:5, roundsSolved: 0}]
 let maxDiscWidth = 18
 let towers = [{name: 'towerOne', discs: []},
   {name: 'towerTwo', discs: []},
@@ -12,7 +15,7 @@ let towerOne = document.querySelector('#towerOne')
 let towerTwo = document.querySelector('#towerTwo')
 let towerThree = document.querySelector('#towerThree')
 let winMessage = document.querySelector('#winMessage')
-let totalNumDiscs = document.querySelector('#numDiscs').value
+let totalNumDiscs = Number(document.querySelector('#numDiscs').value)
 
 //  INITIALIZE GAMESPACE AND DISCS
 const initGameSpace = () => {
@@ -38,6 +41,8 @@ const initGameSpace = () => {
     disc.style.width = `${(maxDiscWidth / totalNumDiscs) * (i+1)}vw`
     towerOne.querySelector('ul').append(disc)
   }
+  // document.querySelector('#disc1').style.position = 'relative'
+  // document.querySelector('#disc1').style.top = '-3rem'
 
 }
 
@@ -60,10 +65,10 @@ const checkMoveIfValid = (towerA, towerB) => {
   let fromDisk = grabTopmostDisc(towerA) || 0
   let toDisk = grabTopmostDisc(towerB) || 0
   if ((fromDisk < toDisk || isEmptyTower(towerB)) && !isEmptyTower(towerA)) {
-    // console.log('move from',fromDisk,'to',toDisk,' can move');
+    console.log('move from',fromDisk,'to',toDisk,' can move');
     return true
   } else {
-    // console.log('move from',fromDisk,'to',toDisk,' not valid');
+    console.log('move from',fromDisk,'to',toDisk,' not valid');
     return false
   }
 }
@@ -93,9 +98,23 @@ const move = (towerA, towerB) => {
 }
 
 const checkForWinAndNextSteps = () => {
+  // check if 2 or 3 are full
+  console.log(totalNumDiscs);
   let fullTower = towers.filter(tower => 
-    tower.name !== 'towerOne' && tower.discs.length === totalNumDiscs)
+    tower.name !== 'towerOne' && tower.discs.length == totalNumDiscs)
+
+  // record score and prompt use they won the round
   if (fullTower.length > 0) {
+    // add to number of rounds won, with right disc number
+    if (winRecord.filter(discCategory => discCategory.numDiscs == totalNumDiscs).length === 0) {
+      let newCategory = {numDiscs: Number(`${totalNumDiscs}`), roundsSolved: 0}
+      winRecord.push(newCategory)}
+    winRecord.forEach(discCategory => {
+      if(discCategory.numDiscs == totalNumDiscs) {
+        discCategory.roundsSolved ++
+      }})
+    console.log(winRecord)    
+    // win message 
     winMessage.style.display = 'block'
   }
 }
@@ -117,16 +136,22 @@ const restartBtnClicked = (e) => {
 }
 
 initGameSpace();
+
+// Event listeners to move discs
 towerOne.addEventListener('click', towerClickHandler)
 towerTwo.addEventListener('click', towerClickHandler)
 towerThree.addEventListener('click', towerClickHandler)
+// Listener to restart game
 document.querySelector('#restartBtn').addEventListener('click', restartBtnClicked)
+// Listern to close win modal
 document.querySelector('#closeWinMessage').addEventListener('click', () => {
   winMessage.style.display = 'none'
   initGameSpace();
 })
+// Increase or decrease number of discs
 document.querySelector('#generateNumDiscs').addEventListener('submit', (e) => {
   e.preventDefault()
   totalNumDiscs = document.querySelector('#numDiscs').value
   initGameSpace()
 })
+
