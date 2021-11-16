@@ -20,7 +20,6 @@ let totalNumDiscs = Number(document.querySelector('#numDiscs').value)
 //  INITIALIZE GAMESPACE AND DISCS
 const initGameSpace = () => {
   moves = 0
-  
   document.querySelector(`#moves`).innerText = `Moves: ${moves}`
   towers = [{name: 'towerOne', discs: []},
   {name: 'towerTwo', discs: []},
@@ -61,10 +60,10 @@ topMostValue = tower.discs[0];
   return topMostValue
 }
 
-const checkMoveIfValid = (towerA, towerB) => {
-  let fromDisk = grabTopmostDisc(towerA) || 0
-  let toDisk = grabTopmostDisc(towerB) || 0
-  if ((fromDisk < toDisk || isEmptyTower(towerB)) && !isEmptyTower(towerA)) {
+const checkMoveIfValid = (firstTowerName, secondTowerName) => {
+  let fromDisk = grabTopmostDisc(firstTowerName) || 0
+  let toDisk = grabTopmostDisc(secondTowerName) || 0
+  if ((fromDisk < toDisk || isEmptyTower(secondTowerName)) && !isEmptyTower(firstTowerName)) {
     console.log('move from',fromDisk,'to',toDisk,' can move');
     return true
   } else {
@@ -74,17 +73,17 @@ const checkMoveIfValid = (towerA, towerB) => {
 }
 
 // TO DO: is there a better way to do below?
-const move = (towerA, towerB) => {
+const move = (firstTowerName, secondTowerName) => {
   let newTowers = []
   towers.forEach(tower => {
-    if (tower.name === towerB) {
+    if (tower.name === secondTowerName) {
       newTowers.push(
-        {name: `${towerB}`,
-        discs: [grabTopmostDisc(towerA), ...tower.discs]
+        {name: `${secondTowerName}`,
+        discs: [grabTopmostDisc(firstTowerName), ...tower.discs]
       })
-    } else if (tower.name === towerA) {
+    } else if (tower.name === firstTowerName) {
       newTowers.push(
-        {name: `${towerA}`,
+        {name: `${firstTowerName}`,
         discs: tower.discs.slice(1)
       })
     } else {
@@ -94,7 +93,8 @@ const move = (towerA, towerB) => {
   towers = newTowers  
   moves++
   document.querySelector(`#moves`).innerText = `Moves: ${moves}`
-  document.querySelector(`#${towerB} ul`).prepend(document.querySelector(`#${towerA} ul`).firstElementChild)
+  // move firstChild of tower A to secondTowerName
+  document.querySelector(`#${secondTowerName} ul`).prepend(document.querySelector(`#${firstTowerName} ul`).firstElementChild)
 }
 
 const checkForWinAndNextSteps = () => {
@@ -132,11 +132,61 @@ const towerClickHandler = (e) => {
   }
 }
 
+const autoMove = (firstTowerName, secondTowerName) => {
+  let firstTowerNumDiscs = towers.filter(tower => tower.name === firstTowerName)[0].discs.length
+  let secondTowerNumDiscs = towers.filter(tower => tower.name === secondTowerName)[0].discs.length
+  
+  if (firstTowerNumDiscs === 0 && secondTowerNumDiscs > 0) {
+    console.log(`${firstTowerName} is empty`)
+    move(secondTowerName, firstTowerName)
+  } else if (secondTowerNumDiscs === 0 && firstTowerNumDiscs > 0) {
+    move(firstTowerName, secondTowerName)
+  } else if (grabTopmostDisc(firstTowerName) > grabTopmostDisc(secondTowerName)) {
+    move(secondTowerName, firstTowerName)
+  } else {
+    move(firstTowerName, secondTowerName)
+  }
+  console.log(towers)
+}
+
+
 const restartBtnClicked = (e) => {
   initGameSpace();
 }
 
-initGameSpace();
+const solvePuzzle = () => {
+  initGameSpace();
+  let minimumMoves = (2 ** totalNumDiscs) - 1
+  let towerA = 'towerOne'
+  let towerB = 'towerTwo'
+  let towerC = 'towerThree'
+  console.log(minimumMoves)
+  if (totalNumDiscs % 2 === 0) {
+    towerB = 'towerThree'
+    towerC = 'towerTwo'
+  }
+
+  for (let i=1; i<= minimumMoves; i++) {
+    console.log(i)
+    if ( i % 3 === 1) {
+      setTimeout(autoMove(towerA, towerC), 3000)
+    } else if (i % 3 === 2) {
+      setTimeout(autoMove(towerA, towerB), 3000)
+    } else if (i % 3 === 0) {
+      setTimeout(autoMove(towerB, towerC),3000)
+    }
+  }
+}
+
+initGameSpace()
+// autoMove('towerOne','towerThree');
+// autoMove('towerOne','towerTwo');
+// autoMove('towerTwo','towerThree');
+// autoMove('towerOne','towerThree');
+// autoMove('towerOne','towerTwo');
+// autoMove('towerTwo','towerThree');
+// autoMove('towerOne','towerThree');
+solvePuzzle()
 
 // Event listeners to move discs
 towerOne.addEventListener('click', towerClickHandler)
