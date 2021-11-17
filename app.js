@@ -139,8 +139,8 @@ const autoMove = (firstTowerName, secondTowerName) => {
   if (firstTowerNumDiscs === 0 && secondTowerNumDiscs > 0) {
     console.log(`${firstTowerName} is empty`)
     move(secondTowerName, firstTowerName)
-  } else if (secondTowerNumDiscs === 0 && firstTowerNumDiscs > 0) {
-    move(firstTowerName, secondTowerName)
+  // } else if (secondTowerNumDiscs === 0 && firstTowerNumDiscs > 0) {
+  //   move(firstTowerName, secondTowerName)
   } else if (grabTopmostDisc(firstTowerName) > grabTopmostDisc(secondTowerName)) {
     move(secondTowerName, firstTowerName)
   } else {
@@ -160,70 +160,32 @@ const solvePuzzle = async () => {
   let towerA = 'towerOne'
   let towerB = 'towerTwo'
   let towerC = 'towerThree'
-  console.log(minimumMoves)
-  if (totalNumDiscs % 2 === 0) {
-    towerB = 'towerThree'
-    towerC = 'towerTwo'
-  }
 
   for (let i=1; i<= minimumMoves; i++) {
     console.log(i)
     if ( i % 3 === 1) {
-      await new Promise((res, rej) => {
+      await new Promise((res) => {
         autoMove(towerA, towerC)
-        setTimeout(() => {res()}, 1000)
+        setTimeout(() => {res()}, 300)
       })
     } else if (i % 3 === 2) {
-      await new Promise((res, rej) => {
+      await new Promise((res) => {
         autoMove(towerA, towerB)
-        setTimeout(() => {res()}, 1000)
+        setTimeout(() => {res()}, 300)
       })    
     } else if (i % 3 === 0) {
-      await new Promise((res, rej) => {
+      await new Promise((res) => {
         autoMove(towerB, towerC)
-        setTimeout(() => {res()}, 1000)
+        setTimeout(() => {res()}, 300)
       })
     }
   }
 }
 
 
-// const solvePuzzle = () => {
-//   initGameSpace();
-//   let minimumMoves = (2 ** totalNumDiscs) - 1
-//   let towerA = 'towerOne'
-//   let towerB = 'towerTwo'
-//   let towerC = 'towerThree'
-//   console.log(minimumMoves)
-//   if (totalNumDiscs % 2 === 0) {
-//     towerB = 'towerThree'
-//     towerC = 'towerTwo'
-//   }
-
-//   for (let i=1; i<= minimumMoves; i++) {
-//     console.log(i)
-//     if ( i % 3 === 1) {
-//       setTimeout(autoMove(towerA, towerC), 3000)
-//     } else if (i % 3 === 2) {
-//       setTimeout(autoMove(towerA, towerB), 3000)
-//     } else if (i % 3 === 0) {
-//       setTimeout(autoMove(towerB, towerC),3000)
-//     }
-//   }
-// }
 
 initGameSpace()
 solvePuzzle()
-
-// TESTING
-// autoMove('towerOne','towerThree');
-// autoMove('towerOne','towerTwo');
-// autoMove('towerTwo','towerThree');
-// autoMove('towerOne','towerThree');
-// autoMove('towerOne','towerTwo');
-// autoMove('towerTwo','towerThree');
-// autoMove('towerOne','towerThree');
-
 
 // Event listeners to move discs
 towerOne.addEventListener('click', towerClickHandler)
