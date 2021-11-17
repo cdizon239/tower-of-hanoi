@@ -154,7 +154,7 @@ const restartBtnClicked = (e) => {
   initGameSpace();
 }
 
-const solvePuzzle = () => {
+const solvePuzzle = async () => {
   initGameSpace();
   let minimumMoves = (2 ** totalNumDiscs) - 1
   let towerA = 'towerOne'
@@ -169,24 +169,61 @@ const solvePuzzle = () => {
   for (let i=1; i<= minimumMoves; i++) {
     console.log(i)
     if ( i % 3 === 1) {
-      setTimeout(autoMove(towerA, towerC), 3000)
+      await new Promise((res, rej) => {
+        autoMove(towerA, towerC)
+        setTimeout(() => {res()}, 1000)
+      })
     } else if (i % 3 === 2) {
-      setTimeout(autoMove(towerA, towerB), 3000)
+      await new Promise((res, rej) => {
+        autoMove(towerA, towerB)
+        setTimeout(() => {res()}, 1000)
+      })    
     } else if (i % 3 === 0) {
-      setTimeout(autoMove(towerB, towerC),3000)
+      await new Promise((res, rej) => {
+        autoMove(towerB, towerC)
+        setTimeout(() => {res()}, 1000)
+      })
     }
   }
 }
 
+
+// const solvePuzzle = () => {
+//   initGameSpace();
+//   let minimumMoves = (2 ** totalNumDiscs) - 1
+//   let towerA = 'towerOne'
+//   let towerB = 'towerTwo'
+//   let towerC = 'towerThree'
+//   console.log(minimumMoves)
+//   if (totalNumDiscs % 2 === 0) {
+//     towerB = 'towerThree'
+//     towerC = 'towerTwo'
+//   }
+
+//   for (let i=1; i<= minimumMoves; i++) {
+//     console.log(i)
+//     if ( i % 3 === 1) {
+//       setTimeout(autoMove(towerA, towerC), 3000)
+//     } else if (i % 3 === 2) {
+//       setTimeout(autoMove(towerA, towerB), 3000)
+//     } else if (i % 3 === 0) {
+//       setTimeout(autoMove(towerB, towerC),3000)
+//     }
+//   }
+// }
+
 initGameSpace()
-// autoMove('towerOne','towerThree');
-// autoMove('towerOne','towerTwo');
-// autoMove('towerTwo','towerThree');
-// autoMove('towerOne','towerThree');
-// autoMove('towerOne','towerTwo');
-// autoMove('towerTwo','towerThree');
-// autoMove('towerOne','towerThree');
 solvePuzzle()
+
+// TESTING
+// autoMove('towerOne','towerThree');
+// autoMove('towerOne','towerTwo');
+// autoMove('towerTwo','towerThree');
+// autoMove('towerOne','towerThree');
+// autoMove('towerOne','towerTwo');
+// autoMove('towerTwo','towerThree');
+// autoMove('towerOne','towerThree');
+
 
 // Event listeners to move discs
 towerOne.addEventListener('click', towerClickHandler)
