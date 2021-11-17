@@ -137,7 +137,7 @@ const autoMove = (firstTowerName, secondTowerName) => {
   let secondTowerNumDiscs = towers.filter(tower => tower.name === secondTowerName)[0].discs.length
   
   if (firstTowerNumDiscs === 0 && secondTowerNumDiscs > 0) {
-    console.log(`${firstTowerName} is empty`)
+    // console.log(`${firstTowerName} is empty`)
     move(secondTowerName, firstTowerName)
   // } else if (secondTowerNumDiscs === 0 && firstTowerNumDiscs > 0) {
   //   move(firstTowerName, secondTowerName)
@@ -146,7 +146,7 @@ const autoMove = (firstTowerName, secondTowerName) => {
   } else {
     move(firstTowerName, secondTowerName)
   }
-  console.log(towers)
+  // console.log(towers)
 }
 
 
@@ -156,30 +156,59 @@ const restartBtnClicked = (e) => {
 
 const solvePuzzle = async () => {
   initGameSpace();
-  let minimumMoves = (2 ** totalNumDiscs) - 1
+  // let minimumMoves = (2 ** totalNumDiscs) - 1
   let towerA = 'towerOne'
   let towerB = 'towerTwo'
   let towerC = 'towerThree'
 
-  for (let i=1; i<= minimumMoves; i++) {
-    console.log(i)
-    if ( i % 3 === 1) {
-      await new Promise((res) => {
+  let countOfEmptyTowers = towers.filter(tower => tower.discs.length === 0).length - 1
+
+  console.log(countOfEmptyTowers);
+
+  while (countOfEmptyTowers < 2) {
+    let numAutoMoves = moves +  1
+    if (numAutoMoves % 3 === 1) {
+      await new Promise((res) => { 
         autoMove(towerA, towerC)
-        setTimeout(() => {res()}, 300)
+        setTimeout(() => {res()
+        console.log(towers)
+        }, 300)
       })
-    } else if (i % 3 === 2) {
-      await new Promise((res) => {
+    } else if (numAutoMoves % 3 === 2){
+      await new Promise((res) => { 
         autoMove(towerA, towerB)
-        setTimeout(() => {res()}, 300)
-      })    
-    } else if (i % 3 === 0) {
-      await new Promise((res) => {
+        setTimeout(() => {res()
+          console.log(towers)}, 300)
+      })
+    } else if (numAutoMoves % 3 === 0){
+      await new Promise((res) => { 
         autoMove(towerB, towerC)
-        setTimeout(() => {res()}, 300)
+        setTimeout(() => {res()
+          console.log(towers)}, 300)
       })
     }
+    countOfEmptyTowers = towers.filter(tower => tower.discs.length === 0).length
   }
+
+  // for (let i=1; i<= minimumMoves; i++) {
+  //   console.log(i)
+  //   if ( i % 3 === 1) {
+  //     await new Promise((res) => {
+  //       autoMove(towerA, towerC)
+  //       setTimeout(() => {res()}, 300)
+  //     })
+  //   } else if (i % 3 === 2) {
+  //     await new Promise((res) => {
+  //       autoMove(towerA, towerB)
+  //       setTimeout(() => {res()}, 300)
+  //     })    
+  //   } else if (i % 3 === 0) {
+  //     await new Promise((res) => {
+  //       autoMove(towerB, towerC)
+  //       setTimeout(() => {res()}, 300)
+  //     })
+  //   }
+  // }
 }
 
 
