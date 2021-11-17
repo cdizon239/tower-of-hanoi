@@ -1,7 +1,6 @@
 //  GAME DEFAULTS AND STATS
 let moves = 0
 let selectedTowers = []
-// let totalNumDiscs = 3
 let winRecord = [{numDiscs:3, roundsSolved: 0},
     {numDiscs:4, roundsSolved: 0},
     {numDiscs:5, roundsSolved: 0}]
@@ -137,16 +136,12 @@ const autoMove = (firstTowerName, secondTowerName) => {
   let secondTowerNumDiscs = towers.filter(tower => tower.name === secondTowerName)[0].discs.length
   
   if (firstTowerNumDiscs === 0 && secondTowerNumDiscs > 0) {
-    // console.log(`${firstTowerName} is empty`)
     move(secondTowerName, firstTowerName)
-  // } else if (secondTowerNumDiscs === 0 && firstTowerNumDiscs > 0) {
-  //   move(firstTowerName, secondTowerName)
   } else if (grabTopmostDisc(firstTowerName) > grabTopmostDisc(secondTowerName)) {
     move(secondTowerName, firstTowerName)
   } else {
     move(firstTowerName, secondTowerName)
   }
-  // console.log(towers)
 }
 
 
@@ -156,35 +151,28 @@ const restartBtnClicked = (e) => {
 
 const solvePuzzle = async () => {
   initGameSpace();
-  // let minimumMoves = (2 ** totalNumDiscs) - 1
   let towerA = 'towerOne'
   let towerB = 'towerTwo'
   let towerC = 'towerThree'
 
   let countOfEmptyTowers = towers.filter(tower => tower.discs.length === 0).length - 1
 
-  console.log(countOfEmptyTowers);
-
   while (countOfEmptyTowers < 2) {
     let numAutoMoves = moves +  1
     if (numAutoMoves % 3 === 1) {
       await new Promise((res) => { 
         autoMove(towerA, towerC)
-        setTimeout(() => {res()
-        console.log(towers)
-        }, 300)
+        setTimeout(() => {res()}, 300)
       })
     } else if (numAutoMoves % 3 === 2){
       await new Promise((res) => { 
         autoMove(towerA, towerB)
-        setTimeout(() => {res()
-          console.log(towers)}, 300)
+        setTimeout(() => {res()}, 300)
       })
     } else if (numAutoMoves % 3 === 0){
       await new Promise((res) => { 
         autoMove(towerB, towerC)
-        setTimeout(() => {res()
-          console.log(towers)}, 300)
+        setTimeout(() => {res()}, 300)
       })
     }
     countOfEmptyTowers = towers.filter(tower => tower.discs.length === 0).length
@@ -211,10 +199,7 @@ const solvePuzzle = async () => {
   // }
 }
 
-
-
 initGameSpace()
-solvePuzzle()
 
 // Event listeners to move discs
 towerOne.addEventListener('click', towerClickHandler)
@@ -233,4 +218,7 @@ document.querySelector('#generateNumDiscs').addEventListener('submit', (e) => {
   totalNumDiscs = document.querySelector('#numDiscs').value
   initGameSpace()
 })
+//  Listen for solve button
+document.querySelector('#solveBtn').addEventListener('click', solvePuzzle)
+
 
