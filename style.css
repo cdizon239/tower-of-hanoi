@@ -75,7 +75,7 @@ ul {
   background-color: #5b5861;
   color: white;
   max-height: 45px;
-  /* max-width: 170px; */
+  min-width: 120px;
   font-family: Circular Book, Arial, sans-serif;
   font-size: 16px;
   padding: 12px 24px;
@@ -83,7 +83,7 @@ ul {
   box-shadow: 0px 1px 1px rgba(0, 87, 125, 0.1),
     0px 1px 2px rgba(0, 87, 125, 0.14);
   border-radius: 4px;
-  margin: 10px 0px;
+  margin: 10px 2%;
   /* margin: 0 auto; */
 }
 
@@ -102,7 +102,7 @@ ul {
   margin: 2% 5%;
 }
 
-#winMessage {
+.modal {
   background-color: rgba(0, 0, 0, 0.4);
   position: fixed;
   top: 0;
@@ -141,4 +141,13 @@ ul {
 form {
   display: flex;
   align-items: center;
+}
+
+@media (min-width: 520px) {
+  #otherGameOptions,
+  .gameOptions {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
 }

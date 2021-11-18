@@ -71,7 +71,6 @@ const checkMoveIfValid = (firstTowerName, secondTowerName) => {
   }
 }
 
-// TO DO: is there a better way to do below?
 const move = (firstTowerName, secondTowerName) => {
   let newTowers = []
   towers.forEach(tower => {
@@ -89,6 +88,7 @@ const move = (firstTowerName, secondTowerName) => {
       newTowers.push(tower)
     }
   })
+  
   towers = newTowers  
   moves++
   document.querySelector(`#moves`).innerText = `Moves: ${moves}`
@@ -135,15 +135,12 @@ const autoMove = (firstTowerName, secondTowerName) => {
   let firstTowerNumDiscs = towers.filter(tower => tower.name === firstTowerName)[0].discs.length
   let secondTowerNumDiscs = towers.filter(tower => tower.name === secondTowerName)[0].discs.length
   
-  if (firstTowerNumDiscs === 0 && secondTowerNumDiscs > 0) {
-    move(secondTowerName, firstTowerName)
-  } else if (grabTopmostDisc(firstTowerName) > grabTopmostDisc(secondTowerName)) {
+  if ((firstTowerNumDiscs === 0 && secondTowerNumDiscs > 0) || grabTopmostDisc(firstTowerName) > grabTopmostDisc(secondTowerName)) {
     move(secondTowerName, firstTowerName)
   } else {
     move(firstTowerName, secondTowerName)
   }
 }
-
 
 const restartBtnClicked = (e) => {
   initGameSpace();
@@ -162,41 +159,21 @@ const solvePuzzle = async () => {
     if (numAutoMoves % 3 === 1) {
       await new Promise((res) => { 
         autoMove(towerA, towerC)
-        setTimeout(() => {res()}, 300)
+        setTimeout(() => {res()}, 500)
       })
     } else if (numAutoMoves % 3 === 2){
       await new Promise((res) => { 
         autoMove(towerA, towerB)
-        setTimeout(() => {res()}, 300)
+        setTimeout(() => {res()}, 500)
       })
     } else if (numAutoMoves % 3 === 0){
       await new Promise((res) => { 
         autoMove(towerB, towerC)
-        setTimeout(() => {res()}, 300)
+        setTimeout(() => {res()}, 500)
       })
     }
     countOfEmptyTowers = towers.filter(tower => tower.discs.length === 0).length
   }
-
-  // for (let i=1; i<= minimumMoves; i++) {
-  //   console.log(i)
-  //   if ( i % 3 === 1) {
-  //     await new Promise((res) => {
-  //       autoMove(towerA, towerC)
-  //       setTimeout(() => {res()}, 300)
-  //     })
-  //   } else if (i % 3 === 2) {
-  //     await new Promise((res) => {
-  //       autoMove(towerA, towerB)
-  //       setTimeout(() => {res()}, 300)
-  //     })    
-  //   } else if (i % 3 === 0) {
-  //     await new Promise((res) => {
-  //       autoMove(towerB, towerC)
-  //       setTimeout(() => {res()}, 300)
-  //     })
-  //   }
-  // }
 }
 
 initGameSpace()
