@@ -44,6 +44,7 @@ const initGameSpace = () => {
 
 }
 
+// GAME HELPER FUNCTIONS
 const isEmptyTower = (towerName) => {
   let tower = towers.filter(tower => tower.name === towerName)
   return tower[0].discs.length === 0 ? true : false
@@ -96,6 +97,18 @@ const move = (firstTowerName, secondTowerName) => {
   document.querySelector(`#${secondTowerName} ul`).prepend(document.querySelector(`#${firstTowerName} ul`).firstElementChild)
 }
 
+const autoMove = (firstTowerName, secondTowerName) => {
+  let firstTowerNumDiscs = towers.filter(tower => tower.name === firstTowerName)[0].discs.length
+  let secondTowerNumDiscs = towers.filter(tower => tower.name === secondTowerName)[0].discs.length
+  
+  if ((firstTowerNumDiscs === 0 && secondTowerNumDiscs > 0) || grabTopmostDisc(firstTowerName) > grabTopmostDisc(secondTowerName)) {
+    move(secondTowerName, firstTowerName)
+  } else {
+    move(firstTowerName, secondTowerName)
+  }
+}
+
+//  CHECK FOR WINNING CONDITION
 const checkForWinAndNextSteps = () => {
   // check if 2 or 3 are full
   console.log(totalNumDiscs);
@@ -108,17 +121,24 @@ const checkForWinAndNextSteps = () => {
     // if disc number not in winRecord yet, then push it to the list
     if (winRecord.filter(discCategory => discCategory.numDiscs == totalNumDiscs).length === 0) {
       let newCategory = {numDiscs: Number(`${totalNumDiscs}`), roundsSolved: 0}
-      winRecord.push(newCategory)}
+      winRecord.push(newCategory)
+    }
     winRecord.forEach(discCategory => {
       if(discCategory.numDiscs == totalNumDiscs) {
-        discCategory.roundsSolved ++
-      }})
-    console.log(winRecord)    
+        discCategory.roundsSolved ++ 
+      }
+    })
+    puzzleNotYetSolved = false
+    stopTimer()
+    console.log(winRecord)  
     // win message 
     winMessage.style.display = 'block'
   }
+  console.log(puzzleNotYetSolved);
 }
 
+
+//  CLICK HANDLER
 const towerClickHandler = (e) => {
   let selectedTower = e.currentTarget.id
   selectedTowers.push(selectedTower)
@@ -131,19 +151,12 @@ const towerClickHandler = (e) => {
   }
 }
 
-const autoMove = (firstTowerName, secondTowerName) => {
-  let firstTowerNumDiscs = towers.filter(tower => tower.name === firstTowerName)[0].discs.length
-  let secondTowerNumDiscs = towers.filter(tower => tower.name === secondTowerName)[0].discs.length
-  
-  if ((firstTowerNumDiscs === 0 && secondTowerNumDiscs > 0) || grabTopmostDisc(firstTowerName) > grabTopmostDisc(secondTowerName)) {
-    move(secondTowerName, firstTowerName)
-  } else {
-    move(firstTowerName, secondTowerName)
-  }
-}
 
 const restartBtnClicked = (e) => {
+  puzzleNotYetSolved = true
   initGameSpace();
+  resetTimer()
+  document.querySelector('.container').addEventListener('click', startTimer)
 }
 
 const solvePuzzle = async () => {
@@ -174,9 +187,73 @@ const solvePuzzle = async () => {
     }
     countOfEmptyTowers = towers.filter(tower => tower.discs.length === 0).length
   }
+
+}
+
+// TIMER
+let currentTimer
+let timer = document.querySelector('#time')
+let seconds = 0
+let minutes = 0
+let hours = 0
+let puzzleNotYetSolved = true
+//  not dry yet!
+const timerFunction = () => {
+  if (puzzleNotYetSolved === true) {
+   seconds = parseInt(seconds)
+   minutes = parseInt(minutes)
+   hours = parseInt(hours)
+   
+   //  increment by a second
+   seconds ++
+
+   //  less than 10: ss, mm, hh
+   if (seconds < 10 && seconds >= 0) {
+     seconds = '0' + seconds
+   }
+   if (minutes < 10 && minutes >= 0) {
+     minutes = '0' + minutes;
+   }
+   if (hours < 10 && hours >= 0) {
+     hours = '0' + hours
+   }
+   if (seconds > 59) {
+     minutes = minutes + 1;
+     seconds = 0;
+   }
+   if (minutes > 59) {
+     hours = hours + 1;
+     minutes = 0;
+     seconds = 0;
+   }
+   timer.innerHTML = `${hours}:${minutes}:${seconds}`
+ }
+}
+
+const startTimer = (e) => {
+  clearTimeout(currentTimer)
+  currentTimer = setInterval(timerFunction, 1000)
+  e.currentTarget.removeEventListener('click', startTimer)
+}
+
+function stopTimer() {
+  clearTimeout(currentTimer)
+}
+
+function resetTimer() {
+  clearTimeout(currentTimer)
+  seconds = 0
+  minutes = 0
+  hours = 0
+  timer.innerHTML = '00:00:00'
 }
 
 initGameSpace()
+
+//  start timer
+let gameSpace = document.querySelector('.container')
+gameSpace.addEventListener('click', startTimer)
+// gameSpace.removeEventListener('click', startTimer)
 
 // Event listeners to move discs
 towerOne.addEventListener('click', towerClickHandler)
@@ -188,6 +265,9 @@ document.querySelector('#restartBtn').addEventListener('click', restartBtnClicke
 document.querySelector('#closeWinMessage').addEventListener('click', () => {
   winMessage.style.display = 'none'
   initGameSpace();
+  puzzleNotYetSolved = true
+  resetTimer()
+  document.querySelector('.container').addEventListener('click', startTimer)
 })
 // Increase or decrease number of discs
 document.querySelector('#generateNumDiscs').addEventListener('submit', (e) => {
