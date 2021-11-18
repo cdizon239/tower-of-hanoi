@@ -13,7 +13,8 @@ let towers = [{name: 'towerOne', discs: []},
 let towerOne = document.querySelector('#towerOne')
 let towerTwo = document.querySelector('#towerTwo')
 let towerThree = document.querySelector('#towerThree')
-let winMessage = document.querySelector('#winMessage')
+let winModal = document.querySelector('#winModal')
+let winText = document.querySelector('#winText')
 let totalNumDiscs = Number(document.querySelector('#numDiscs').value)
 
 //  INITIALIZE GAMESPACE AND DISCS
@@ -122,11 +123,11 @@ const checkForWinAndNextSteps = () => {
         discCategory.roundsSolved ++ 
       }
     })
-    puzzleNotYetSolved = false
     stopTimer()
     console.log(winRecord)  
-    // win message 
-    winMessage.style.display = 'block'
+    // win message
+    winText.innerHTML = `Congratulations! You solved the ${totalNumDiscs}-disc puzzle with ${moves} moves. <br>${time.innerText}`
+    winModal.style.display = 'block'
   }
   console.log(puzzleNotYetSolved);
 }
@@ -213,7 +214,7 @@ const timerFunction = () => {
      minutes = 0;
      seconds = 0;
    }
-   timer.innerHTML = `${hours}:${minutes}:${seconds}`
+   timer.innerHTML = `Time: ${hours}:${minutes}:${seconds}`
  }
 }
 const startTimer = (e) => {
@@ -222,9 +223,11 @@ const startTimer = (e) => {
   e.currentTarget.removeEventListener('click', startTimer)
 }
 function stopTimer() {
+  puzzleNotYetSolved = false
   clearInterval(currentTimer)
 }
 function resetTimer() {
+  puzzleNotYetSolved = true
   clearInterval(currentTimer)
   seconds = 0
   minutes = 0
@@ -246,9 +249,8 @@ towerThree.addEventListener('click', towerClickHandler)
 document.querySelector('#restartBtn').addEventListener('click', restartBtnClicked)
 // Listern to close win modal
 document.querySelector('#closeWinMessage').addEventListener('click', () => {
-  winMessage.style.display = 'none'
+  winModal.style.display = 'none'
   initGameSpace();
-  puzzleNotYetSolved = true
   resetTimer()
   document.querySelector('.container').addEventListener('click', startTimer)
 })
