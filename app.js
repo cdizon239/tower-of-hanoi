@@ -49,7 +49,6 @@ const isEmptyTower = (towerName) => {
   let tower = towers.filter(tower => tower.name === towerName)
   return tower[0].discs.length === 0 ? true : false
 }
-
 const grabTopmostDisc = (towerName) => {
   let topMostValue
   towers.forEach(tower => {
@@ -59,7 +58,6 @@ topMostValue = tower.discs[0];
   })
   return topMostValue
 }
-
 const checkMoveIfValid = (firstTowerName, secondTowerName) => {
   let fromDisk = grabTopmostDisc(firstTowerName) || 0
   let toDisk = grabTopmostDisc(secondTowerName) || 0
@@ -71,7 +69,6 @@ const checkMoveIfValid = (firstTowerName, secondTowerName) => {
     return false
   }
 }
-
 const move = (firstTowerName, secondTowerName) => {
   let newTowers = []
   towers.forEach(tower => {
@@ -89,14 +86,12 @@ const move = (firstTowerName, secondTowerName) => {
       newTowers.push(tower)
     }
   })
-  
   towers = newTowers  
   moves++
   document.querySelector(`#moves`).innerText = `Moves: ${moves}`
   // move firstChild of tower A to secondTowerName
   document.querySelector(`#${secondTowerName} ul`).prepend(document.querySelector(`#${firstTowerName} ul`).firstElementChild)
 }
-
 const autoMove = (firstTowerName, secondTowerName) => {
   let firstTowerNumDiscs = towers.filter(tower => tower.name === firstTowerName)[0].discs.length
   let secondTowerNumDiscs = towers.filter(tower => tower.name === secondTowerName)[0].discs.length
@@ -107,7 +102,6 @@ const autoMove = (firstTowerName, secondTowerName) => {
     move(firstTowerName, secondTowerName)
   }
 }
-
 //  CHECK FOR WINNING CONDITION
 const checkForWinAndNextSteps = () => {
   // check if 2 or 3 are full
@@ -137,8 +131,7 @@ const checkForWinAndNextSteps = () => {
   console.log(puzzleNotYetSolved);
 }
 
-
-//  CLICK HANDLER
+//  CLICK HANDLERS
 const towerClickHandler = (e) => {
   let selectedTower = e.currentTarget.id
   selectedTowers.push(selectedTower)
@@ -150,15 +143,12 @@ const towerClickHandler = (e) => {
     selectedTowers = []
   }
 }
-
-
 const restartBtnClicked = (e) => {
   puzzleNotYetSolved = true
   initGameSpace();
   resetTimer()
   document.querySelector('.container').addEventListener('click', startTimer)
 }
-
 const solvePuzzle = async () => {
   initGameSpace();
   let towerA = 'towerOne'
@@ -187,7 +177,6 @@ const solvePuzzle = async () => {
     }
     countOfEmptyTowers = towers.filter(tower => tower.discs.length === 0).length
   }
-
 }
 
 // TIMER
@@ -197,16 +186,14 @@ let seconds = 0
 let minutes = 0
 let hours = 0
 let puzzleNotYetSolved = true
-//  not dry yet!
+// Not DRY yet!
 const timerFunction = () => {
   if (puzzleNotYetSolved === true) {
    seconds = parseInt(seconds)
    minutes = parseInt(minutes)
    hours = parseInt(hours)
-   
    //  increment by a second
    seconds ++
-
    //  less than 10: ss, mm, hh
    if (seconds < 10 && seconds >= 0) {
      seconds = '0' + seconds
@@ -229,32 +216,28 @@ const timerFunction = () => {
    timer.innerHTML = `${hours}:${minutes}:${seconds}`
  }
 }
-
 const startTimer = (e) => {
-  clearTimeout(currentTimer)
+  clearInterval(currentTimer)
   currentTimer = setInterval(timerFunction, 1000)
   e.currentTarget.removeEventListener('click', startTimer)
 }
-
 function stopTimer() {
-  clearTimeout(currentTimer)
+  clearInterval(currentTimer)
 }
-
 function resetTimer() {
-  clearTimeout(currentTimer)
+  clearInterval(currentTimer)
   seconds = 0
   minutes = 0
   hours = 0
-  timer.innerHTML = '00:00:00'
+  timer.innerHTML = 'Time: 00:00:00'
 }
 
-initGameSpace()
 
-//  start timer
+initGameSpace()
+// EVENT LISTENERS
+// Start timer on first click
 let gameSpace = document.querySelector('.container')
 gameSpace.addEventListener('click', startTimer)
-// gameSpace.removeEventListener('click', startTimer)
-
 // Event listeners to move discs
 towerOne.addEventListener('click', towerClickHandler)
 towerTwo.addEventListener('click', towerClickHandler)
@@ -275,7 +258,5 @@ document.querySelector('#generateNumDiscs').addEventListener('submit', (e) => {
   totalNumDiscs = document.querySelector('#numDiscs').value
   initGameSpace()
 })
-//  Listen for solve button
+// Listen for solve button
 document.querySelector('#solveBtn').addEventListener('click', solvePuzzle)
-
-
