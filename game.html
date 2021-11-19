@@ -11,11 +11,12 @@
   <title>Tower of Hanoi</title>
 </head>
 <body>
-  <header><a href="#" class="button" id="signOut">Sign out</a>
+  <header>
+    <h2>The goal is to move the entire stack to any of the tower on the right. You can only move one disc at a time and you cannot stack a bigger disc on top of a smaller one</h2>
+    <!-- <a href="#" class="button" id="signOut">Sign out</a> -->
   </header>
-  <h1>Tower of Hanoi</h1>
-  <h2>Move the entire stack to any of the tower on the right. You can only move one disc at a time and you cannot stack a bigger disc on top of a smaller one</h2>
-  <div>
+  <!-- <h1>Tower of Hanoi</h1> -->
+  <div id=gameStatus>
     <p id="moves">Moves: 0</p>
     <p id="time">Time: 00:00:00</p>
   </div>
@@ -42,20 +43,21 @@
   <div class="gameOptions">
     <form id="generateNumDiscs">
       <input type="number" value=3 step="1" id="numDiscs"></input>
-      <button type="submit" class="button">Generate discs</button>
+      <button type="submit" class="button" id="numDiscsBtn">Generate discs</button>
     </form>
-    <button id="restartBtn" class="button">Restart</button>
+    <div id="otherGameOptions">
+      <button id="restartBtn" class="button">Restart</button>
+      <button id="solveBtn" class="button">Solve</button>
+      <button id="statsBtn" class="button">Game Stats</button>
+    </div>
   </div>
-  <div id="otherGameOptions">
-    <button id="solveBtn" class="button">Solve</button>
-    <button id="statsBtn" class="button">Game Stats</button>
-    <button id="callBtn" class="button">Call a Friend</button>
-  </div>
+
+
 
   <div class="modal" id="winModal">
     <!-- win modal text -->
     <div class="card modal-textbox win">
-      <h1 id="winText">Yay! You were able to solve this puzzle!</h1>
+      <h3 id="winText">Yay! You were able to solve this puzzle!</h3>
       <button id="closeWinMessage" class="button">Close</button>
     </div>
   </div>
