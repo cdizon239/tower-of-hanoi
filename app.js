@@ -1,3 +1,6 @@
+// import {onLoad} from './signIn.js'
+
+
 //  GAME DEFAULTS AND STATS
 let moves = 0
 let selectedTowers = []
@@ -234,6 +237,7 @@ function resetTimer() {
   hours = 0
   timer.innerHTML = 'Time: 00:00:00'
 }
+
 
 
 initGameSpace()

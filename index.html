@@ -1,59 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <title>Tower of Hanoi</title>
-</head>
-<body>
-  <h1>Tower of Hanoi</h1>
-  <h2>Move the entire stack to any of the tower on the right. You can only move one disc at a time and you cannot stack a bigger disc on top of a smaller one</h2>
-  <div>
-    <p id="moves">Moves: 0</p>
-    <p id="time">Time: 00:00:00</p>
-  </div>
-  <div class="container">
-    <div id="towerOne" class="tower">
-      <div class="tower-top">
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="475551706198-ofheol1shp19fma0nhnp5vm2u8dricf5.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata:700|Play" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" >
+    <title>Tower of Hanoi</title>
+  </head>
+  <body class="homepage">
+      <div class="homepage">
+        <h1 class="title --xl-large">Tower of Hanoi</h1>
+        <!-- <a class="button" href="game.html">Play</a> -->
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
       </div>
-      <div class="tower-bottom">
-      </div>
-    </div>
-    <div id="towerTwo" class="tower">
-      <div class="tower-top">
-      </div>
-      <div class="tower-bottom">
-      </div>
-    </div>
-    <div id="towerThree" class="tower">
-      <div class="tower-top">
-      </div>
-      <div class="tower-bottom">
-      </div>
-    </div>
-  </div>
-  <div class="gameOptions">
-    <form id="generateNumDiscs">
-      <input type="number" value=3 step="1" id="numDiscs"></input>
-      <button type="submit" class="button">Generate discs</button>
-    </form>
-    <button id="restartBtn" class="button">Restart</button>
-  </div>
-  <div id="otherGameOptions">
-    <button id="solveBtn" class="button">Solve</button>
-    <button id="statsBtn" class="button">Game Stats</button>
-    <button id="callBtn" class="button">Call a Friend</button>
-  </div>
-
-  <div class="modal" id="winModal">
-    <!-- win modal text -->
-    <div class="card modal-textbox win">
-      <h1 id="winText">Yay! You were able to solve this puzzle!</h1>
-      <button id="closeWinMessage" class="button">Close</button>
-    </div>
-  </div>
-  <script src="app.js"></script>
-</body>
+      <script src="signIn.js"></script>
+  </body>
 </html>

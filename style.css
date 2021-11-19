@@ -24,6 +24,17 @@ h2 {
   color: #ab6954;
 }
 
+.title {
+  /* text-transform: uppercase; */
+  font-size: 2rem;
+}
+.title.\--xl-large {
+  display: block;
+  position: relative;
+  font-size: 6rem;
+  letter-spacing: 10px;
+}
+
 .tower:hover {
   background-color: #cad2c5;
 }
