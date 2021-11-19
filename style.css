@@ -1,79 +1,30 @@
 /* @import url(//db.onlinewebfonts.com/c/02d8f1743ede250c7c9865f1574d7cc6?family=Circular+Book); */
-
+header {
+  margin: 2%;
+}
 body {
   font-family: "Circular Book", sans-serif;
   background-color: #f9efed;
   text-align: center;
+  transition: all 500ms ease;
 }
-.container {
-  background: #e9ccbe;
-  margin: 0 5%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  height: 50vh;
-}
-
 h1 {
   color: #303c41;
+  text-align: left;
 }
-
 h2 {
+  text-align: left;
   font-size: 18px;
   font-weight: 100;
   color: #ab6954;
 }
-
-.title {
-  /* text-transform: uppercase; */
-  font-size: 2rem;
+p {
+  display: inline-block;
 }
-.title.\--xl-large {
-  display: block;
-  position: relative;
-  font-size: 6rem;
-  letter-spacing: 10px;
-}
-
-.tower:hover {
-  background-color: #cad2c5;
-}
-
-#towerOne,
-#towerTwo,
-#towerThree {
+form {
   display: flex;
-  flex-direction: column;
-  padding: 2%;
-  justify-content: flex-end;
   align-items: center;
 }
-
-.tower-top {
-  background-color: #bd8e6b;
-  min-height: 100px;
-  width: 12px;
-  padding: 2px;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-}
-
-.tower-bottom {
-  background-color: #bd8e6b;
-  width: 20vw;
-  height: 5%;
-}
-
-.container li {
-  background-color: #606c38;
-  width: 50px;
-  display: block;
-  z-index: 30;
-  height: 20px;
-  border-radius: 5px;
-}
-
 ul {
   display: flex;
   flex-direction: column;
@@ -82,56 +33,20 @@ ul {
   margin: 0 auto;
 }
 
-.button {
-  background-color: #5b5861;
-  color: white;
-  max-height: 45px;
-  min-width: 120px;
-  font-family: Circular Book, Arial, sans-serif;
-  font-size: 16px;
-  padding: 12px 24px;
-  border: none;
-  box-shadow: 0px 1px 1px rgba(0, 87, 125, 0.1),
-    0px 1px 2px rgba(0, 87, 125, 0.14);
-  border-radius: 4px;
-  margin: 10px 2%;
-  /* margin: 0 auto; */
+/*  CLASSES */
+.container {
+  background: #e9ccbe;
+  margin: 0 5%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  height: 30vh;
 }
-
-.gameOptions {
+.homepage {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  margin: 2% 5%;
-}
-
-#otherGameOptions {
-  display: flex;
-  height: 100%;
-  flex-direction: column;
-  justify-content: space-between;
-  margin: 2% 5%;
-}
-
-.modal {
-  background-color: rgba(0, 0, 0, 0.4);
-  position: fixed;
-  top: 0;
-  left: 0;
-  /* This means the modal will take the X% height of the parent */
-  height: 100%;
-  width: 100%;
-  z-index: 1;
-  display: none;
-}
-
-#generateNumDiscs input {
-  padding: 10px;
-  border: none;
-  color: #303c41;
-  font-size: 24px;
-  text-align: center;
-  width: 20%;
+  justify-content: center;
+  align-items: center;
 }
 .card {
   display: flex;
@@ -148,17 +63,155 @@ ul {
   overflow: auto;
   flex-direction: column;
 }
-
-form {
+.story p {
+  text-align: justify;
+  padding: 4%;
+}
+.story {
+  background: #cad2c5;
   display: flex;
+  width: 90vw;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
+}
+.title {
+  font-size: 3rem;
+  text-align: center;
+}
+.tower:hover {
+  background-color: #cad2c5;
+}
+.tower-top {
+  /* background: linear-gradient(to right, #eea668, #ed7e1d, #e67e22); */
+  background-color: #bd8e6b;
+  min-height: 100px;
+  width: 5px;
+  padding: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+.tower-bottom {
+  background-color: #bd8e6b;
+  width: 25vw;
+  height: 3%;
+  margin-bottom: 2%;
+  border-radius: 2px;
+}
+.container li {
+  background-color: #c59a00;
+  width: 50px;
+  display: block;
+  z-index: 10;
+  height: 20px;
+  border-radius: 5px;
+}
+.button {
+  background-color: #5b5861;
+  color: white;
+  min-width: 120px;
+  font-family: Circular Book, Arial, sans-serif;
+  font-size: 16px;
+  padding: 12px 24px;
+  border: none;
+  box-shadow: 0px 1px 1px rgba(0, 87, 125, 0.1),
+    0px 1px 2px rgba(0, 87, 125, 0.14);
+  border-radius: 4px;
+  margin: 4% 2%;
+}
+.gameOptions {
+  margin: 2% 5%;
+}
+.modal {
+  background-color: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  top: 0;
+  left: 0;
+  /* This means the modal will take the X% height of the parent */
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+  display: none;
+}
+
+/*  IDs */
+#gameStatus {
+  display: flex;
+  margin: 0 2%;
+  justify-content: space-between;
+}
+#towerOne,
+#towerTwo,
+#towerThree {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+#otherGameOptions {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 2% 5%;
+}
+#generateNumDiscs input {
+  padding: 10px;
+  border: none;
+  color: #303c41;
+  font-size: 24px;
+  text-align: center;
+  width: 20%;
+}
+
+#restartBtn {
+  background-color: #52796f;
+}
+#solveBtn {
+  background-color: #84a98c;
+}
+#statsBtn {
+  background-color: #a7bb9a;
+}
+#numDiscsBtn {
+  margin-left: 1%;
+}
+#restartBtn:hover,
+#solveBtn:hover,
+#statsBtn:hover {
+  transform: scale(1.3, 1.3);
+  -webkit-transform: scale(1.3, 1.3);
+  -moz-transform: scale(1.3, 1.3);
 }
 
 @media (min-width: 520px) {
   #otherGameOptions,
   .gameOptions {
+    width: 50vw;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    margin: 2% auto;
+    justify-content: flex-start;
+  }
+  .container {
+    background: #e9ccbe;
+    margin: 0 5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    height: 40vh;
+  }
+  .button {
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  .modal-textbox {
+    max-width: 50vw;
+    margin: 150px auto;
+    overflow: auto;
+    flex-direction: column;
   }
 }
