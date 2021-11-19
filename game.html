@@ -4,21 +4,19 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="google-signin-scope" content="profile email">
-    <meta name="google-signin-client_id" content="475551706198-ofheol1shp19fma0nhnp5vm2u8dricf5.apps.googleusercontent.com">
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
   <link rel="stylesheet" href="style.css">
   <title>Tower of Hanoi</title>
 </head>
 <body>
   <header>
+    <h1>Welcome to Tower of Hanoi!</h1>
     <h2>The goal is to move the entire stack to any of the tower on the right. You can only move one disc at a time and you cannot stack a bigger disc on top of a smaller one</h2>
     <!-- <a href="#" class="button" id="signOut">Sign out</a> -->
   </header>
   <!-- <h1>Tower of Hanoi</h1> -->
   <div id=gameStatus>
-    <p id="moves">Moves: 0</p>
     <p id="time">Time: 00:00:00</p>
+    <p id="moves">Moves: 0</p>
   </div>
   <div class="container">
     <div id="towerOne" class="tower">
@@ -52,8 +50,6 @@
     </div>
   </div>
 
-
-
   <div class="modal" id="winModal">
     <!-- win modal text -->
     <div class="card modal-textbox win">
@@ -61,7 +57,12 @@
       <button id="closeWinMessage" class="button">Close</button>
     </div>
   </div>
-  <script type="module" src="signIn.js"></script>
+  <div class="modal" id="gameStatsModal">
+    <!-- game stats -->
+    <div class="card modal-textbox game-stats">
+      <button id="closeGameStats" class="button">Close</button>
+    </div>
+  </div>
   <script src="app.js"></script>
 
 </body>

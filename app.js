@@ -1,21 +1,16 @@
-//  profile
-const userName = localStorage.getItem("userName");
-const userEmail = localStorage.getItem("userEmail");
-
-window.addEventListener("load", () => {
-  let title = document.createElement(`h1`);
-  title.append(` Welcome to Tower of Hanoi!`);
-  document.querySelector("header").prepend(title);
-});
-
 //  GAME DEFAULTS AND STATS
 let moves = 0;
 let selectedTowers = [];
-let winRecord = [
-  { numDiscs: 3, roundsSolved: 0 },
-  { numDiscs: 4, roundsSolved: 0 },
-  { numDiscs: 5, roundsSolved: 0 },
-];
+// let winRecord = [
+//   { numDiscs: 3, roundsSolved: 0, bestNumMoves: 0 },
+//   { numDiscs: 4, roundsSolved: 0, bestNumMoves: 0 },
+//   { numDiscs: 5, roundsSolved: 0, bestNumMoves: 0 },
+// ];
+// localStorage.setItem("storedWins", JSON.stringify(winRecord));
+
+let storedWins = JSON.parse(localStorage.getItem("storedWins"));
+console.log(storedWins);
+
 let maxDiscWidth = 24;
 let towers = [
   { name: "towerOne", discs: [] },
@@ -130,9 +125,36 @@ const autoMove = (firstTowerName, secondTowerName) => {
     move(firstTowerName, secondTowerName);
   }
 };
+
+const storeScore = () => {
+  if (!storedWins) {
+    storedWins = [];
+  }
+  if (
+    storedWins.filter((discCategory) => discCategory.numDiscs == totalNumDiscs)
+      .length === 0
+  ) {
+    let newCategory = {
+      numDiscs: Number(`${totalNumDiscs}`),
+      roundsSolved: 0,
+      bestNumMoves: moves,
+    };
+    storedWins.push(newCategory);
+  }
+  storedWins.forEach((discCategory) => {
+    if (discCategory.numDiscs == totalNumDiscs) {
+      discCategory.roundsSolved++;
+      if (discCategory.bestNumMoves > moves || discCategory.bestNumMoves == 0) {
+        discCategory.bestNumMoves = moves;
+      }
+    }
+    localStorage.setItem("storedWins", JSON.stringify(storedWins));
+  });
+};
+
 //  CHECK FOR WINNING CONDITION
 const checkForWinAndNextSteps = () => {
-  // check if 2 or 3 are full
+  // check if towers 2 or 3 are full
   console.log(totalNumDiscs);
   let fullTower = towers.filter(
     (tower) => tower.name !== "towerOne" && tower.discs.length == totalNumDiscs
@@ -142,23 +164,32 @@ const checkForWinAndNextSteps = () => {
   if (fullTower.length > 0) {
     // add to number of rounds won, with right disc number
     // if disc number not in winRecord yet, then push it to the list
-    if (
-      winRecord.filter((discCategory) => discCategory.numDiscs == totalNumDiscs)
-        .length === 0
-    ) {
-      let newCategory = {
-        numDiscs: Number(`${totalNumDiscs}`),
-        roundsSolved: 0,
-      };
-      winRecord.push(newCategory);
-    }
-    winRecord.forEach((discCategory) => {
-      if (discCategory.numDiscs == totalNumDiscs) {
-        discCategory.roundsSolved++;
-      }
-    });
+
+    storeScore();
+
+    // if (
+    //   winRecord.filter((discCategory) => discCategory.numDiscs == totalNumDiscs)
+    //     .length === 0
+    // ) {
+    //   let newCategory = {
+    //     numDiscs: Number(`${totalNumDiscs}`),
+    //     roundsSolved: 0,
+    //     bestNumMoves: moves,
+    //   };
+    //   winRecord.push(newCategory);
+    // }
+    // winRecord.forEach((discCategory) => {
+    //   if (discCategory.numDiscs == totalNumDiscs) {
+    //     discCategory.roundsSolved++;
+    //     if (
+    //       discCategory.bestNumMoves > moves ||
+    //       discCategory.bestNumMoves == 0
+    //     ) {
+    //       discCategory.bestNumMoves = moves;
+    //     }
+    //   }
+    // });
     stopTimer();
-    console.log(winRecord);
     // win message
     winText.innerHTML = `Congratulations! <br>You solved the ${totalNumDiscs}-disc puzzle with ${moves} moves. <br>${time.innerText}`;
     winModal.style.display = "block";
