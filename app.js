@@ -1,4 +1,5 @@
-// import {onLoad} from './signIn.js'
+//  profile
+const profile = localStorage.getItem('userName')
 
 
 //  GAME DEFAULTS AND STATS

@@ -13,7 +13,9 @@ function onSignIn(googleUser) {
   let id_token = googleUser.getAuthResponse().id_token;
   console.log("ID Token: " + id_token);
   
+  localStorage.setItem('userName', profile.getGivenName());
   location.href="game.html"
+
 }
 
 function signOut() {
