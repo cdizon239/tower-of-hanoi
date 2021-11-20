@@ -32,7 +32,7 @@
 <h3 align="center">Tower of Hanoi</h3>
 
   <p align="center">
-    This project is a virtual rendition of the mathematical puzzle, Tower of Hanoi built with HTML, CSS, and Javascript
+    This project is a virtual rendition of the mathematical puzzle, Tower of Hanoi. Built with HTML, CSS, and Javascript
     <br />
     <a href="https://github.com/cdizon239/tower-of-hanoi"><strong>Explore the docs »</strong></a>
     <br />
@@ -77,7 +77,7 @@
 
 [![Product Name Screen Shot][product-screenshot]](https://cdizon239.github.io/tower-of-hanoi/)
 
-Tower of Hanoi is a mathematical puzzle that consists of three pegs or towers with n disks placed one over the other. The objective of the puzzle is to move the stack to another peg following these simple rules. Only one disc can be moved at a time. No disc can be placed on top of the smaller disc.
+Tower of Hanoi is a mathematical puzzle that consists of three pegs or towers with n discs placed one over the other. The objective of the puzzle is to move the stack to another peg following these simple rules. Only one disc can be moved at a time. No disc can be placed on top of the smaller disc.
 
 Features:
 
