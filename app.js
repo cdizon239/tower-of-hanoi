@@ -224,10 +224,14 @@ const towerClickHandler = (e) => {
     if (checkMoveIfValid(selectedTowers[0], selectedTowers[1])) {
       move(selectedTowers[0], selectedTowers[1]);
       checkForWinAndNextSteps();
+      document
+        .querySelector(`#${selectedTower} ul`)
+        .firstElementChild.classList.toggle("green");
+    } else {
+      document
+        .querySelector(`#${selectedTowers[0]} ul`)
+        .firstElementChild.classList.toggle("green");
     }
-    document
-      .querySelector(`#${selectedTower} ul`)
-      .firstElementChild.classList.toggle("green");
     selectedTowers = [];
   } else {
     document
