@@ -75,7 +75,7 @@
 
 ## About The Project
 
-[<img src="./images/productdemo.gif">](https://cdizon239.github.io/tower-of-hanoi/)
+[![Product Name Screen Shot][product-screenshot]](https://cdizon239.github.io/tower-of-hanoi/)
 
 Tower of Hanoi is a mathematical puzzle that consists of three pegs or towers with n disks placed one over the other. The objective of the puzzle is to move the stack to another peg following these simple rules. Only one disc can be moved at a time. No disc can be placed on top of the smaller disc.
 
@@ -197,4 +197,4 @@ Project Link: [https://github.com/cdizon239/tower-of-hanoi](https://github.com/c
 [issues-url]: https://github.com/cdizon239/tower-of-hanoi/issues
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/charmille-coleen-dizon
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: ./images/productDemo.gif
