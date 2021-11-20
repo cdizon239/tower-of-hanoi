@@ -95,9 +95,6 @@ const move = (firstTowerName, secondTowerName) => {
   document
     .querySelector(`#${secondTowerName} ul`)
     .prepend(document.querySelector(`#${firstTowerName} ul`).firstElementChild);
-  // document.querySelector(
-  //   `#${secondTowerName} ul`
-  // ).firstElementChild.style.backgroundColor = "#c59a00";
 };
 const autoMove = (firstTowerName, secondTowerName) => {
   let firstTowerNumDiscs = towers.filter(
