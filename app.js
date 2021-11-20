@@ -226,12 +226,12 @@ const towerClickHandler = (e) => {
       checkForWinAndNextSteps();
     }
     document
-      .querySelector(`#${e.currentTarget.id} ul`)
+      .querySelector(`#${selectedTower} ul`)
       .firstElementChild.classList.toggle("green");
     selectedTowers = [];
   } else {
     document
-      .querySelector(`#${e.currentTarget.id} ul`)
+      .querySelector(`#${selectedTower} ul`)
       .firstElementChild.classList.toggle("green");
   }
 };
@@ -279,6 +279,7 @@ const solvePuzzle = async () => {
     ).length;
   }
 };
+// Game stats table on button click
 const seeGameStats = () => {
   const statsContent = document.querySelector("#gameStatsContent");
   statsContent.innerHTML = "";
@@ -339,8 +340,9 @@ document.querySelector("#generateNumDiscs").addEventListener("submit", (e) => {
 });
 // Listen for solve button
 document.querySelector("#solveBtn").addEventListener("click", solvePuzzle);
+// Listen for Game stats button
 document.querySelector("#statsBtn").addEventListener("click", seeGameStats);
-
+//  Close game sats modal
 document.querySelector("#closeGameStats").addEventListener("click", () => {
   statsModal.classList.toggle("hide");
 });
