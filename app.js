@@ -281,7 +281,7 @@ const solvePuzzle = async () => {
 const seeGameStats = () => {
   const statsContent = document.querySelector("#gameStatsContent");
   statsContent.innerHTML = "";
-  if (!storedWins || storedWins.length === 0) {
+  if (!storedWins || storedWins.length == 0) {
     let playMessage = document.createElement("p");
     playMessage.innerText =
       "Play to start seeing how awesome you could be at this puzzle";
