@@ -41,7 +41,7 @@ const initGameSpace = () => {
     let disc = document.createElement("li");
     disc.id = `disc${i + 1}`;
     disc.style.width = `${(maxDiscWidth / totalNumDiscs) * (i + 1)}vw`;
-    towerOne.querySelector("ul").append(disc);
+    towerOne.querySelector("ul").appendChild(disc);
   }
 };
 
@@ -95,6 +95,9 @@ const move = (firstTowerName, secondTowerName) => {
   document
     .querySelector(`#${secondTowerName} ul`)
     .prepend(document.querySelector(`#${firstTowerName} ul`).firstElementChild);
+  // document.querySelector(
+  //   `#${secondTowerName} ul`
+  // ).firstElementChild.style.backgroundColor = "#c59a00";
 };
 const autoMove = (firstTowerName, secondTowerName) => {
   let firstTowerNumDiscs = towers.filter(
@@ -225,7 +228,14 @@ const towerClickHandler = (e) => {
       move(selectedTowers[0], selectedTowers[1]);
       checkForWinAndNextSteps();
     }
+    document
+      .querySelector(`#${e.currentTarget.id} ul`)
+      .firstElementChild.classList.toggle("green");
     selectedTowers = [];
+  } else {
+    document
+      .querySelector(`#${e.currentTarget.id} ul`)
+      .firstElementChild.classList.toggle("green");
   }
 };
 const restartBtnClicked = (e) => {

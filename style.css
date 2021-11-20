@@ -64,6 +64,9 @@ tr:hover {
 }
 
 /*  CLASSES */
+.green {
+  background-color: #606c38 !important;
+}
 .hide {
   display: none;
 }
