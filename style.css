@@ -158,6 +158,7 @@ tr:hover {
 }
 .container li {
   background-color: #c59a00;
+  border-bottom: 0.2px solid #9f5616;
   width: 50px;
   display: block;
   z-index: 10;
