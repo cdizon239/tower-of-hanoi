@@ -1,15 +1,7 @@
 //  GAME DEFAULTS AND STATS
 let moves = 0;
 let selectedTowers = [];
-// let winRecord = [
-//   { numDiscs: 3, roundsSolved: 0, bestNumMoves: 0 },
-//   { numDiscs: 4, roundsSolved: 0, bestNumMoves: 0 },
-//   { numDiscs: 5, roundsSolved: 0, bestNumMoves: 0 },
-// ];
-// localStorage.setItem("storedWins", JSON.stringify(winRecord));
-
 let storedWins = JSON.parse(localStorage.getItem("storedWins"));
-console.log(storedWins);
 
 let maxDiscWidth = 24;
 let towers = [
@@ -24,6 +16,7 @@ let towerTwo = document.querySelector("#towerTwo");
 let towerThree = document.querySelector("#towerThree");
 let winModal = document.querySelector("#winModal");
 let winText = document.querySelector("#winText");
+let statsModal = document.querySelector("#gameStatsModal");
 let totalNumDiscs = Number(document.querySelector("#numDiscs").value);
 
 //  INITIALIZE GAMESPACE AND DISCS
@@ -127,9 +120,11 @@ const autoMove = (firstTowerName, secondTowerName) => {
 };
 
 const storeScore = () => {
+  //  if list is null (i.e. not in local storage yet)
   if (!storedWins) {
     storedWins = [];
   }
+  // check if discNum category is not inlist, make a new object and push to list
   if (
     storedWins.filter((discCategory) => discCategory.numDiscs == totalNumDiscs)
       .length === 0
@@ -141,6 +136,7 @@ const storeScore = () => {
     };
     storedWins.push(newCategory);
   }
+  // store the best score at a given round/disc number
   storedWins.forEach((discCategory) => {
     if (discCategory.numDiscs == totalNumDiscs) {
       discCategory.roundsSolved++;
@@ -148,109 +144,26 @@ const storeScore = () => {
         discCategory.bestNumMoves = moves;
       }
     }
-    localStorage.setItem("storedWins", JSON.stringify(storedWins));
   });
+  // sort and update local storage
+  storedWins = storedWins.sort((a, b) => a.numDiscs - b.numDiscs);
+  localStorage.setItem("storedWins", JSON.stringify(storedWins));
 };
 
 //  CHECK FOR WINNING CONDITION
 const checkForWinAndNextSteps = () => {
   // check if towers 2 or 3 are full
-  console.log(totalNumDiscs);
   let fullTower = towers.filter(
     (tower) => tower.name !== "towerOne" && tower.discs.length == totalNumDiscs
   );
 
   // record score and prompt use they won the round
   if (fullTower.length > 0) {
-    // add to number of rounds won, with right disc number
-    // if disc number not in winRecord yet, then push it to the list
-
     storeScore();
-
-    // if (
-    //   winRecord.filter((discCategory) => discCategory.numDiscs == totalNumDiscs)
-    //     .length === 0
-    // ) {
-    //   let newCategory = {
-    //     numDiscs: Number(`${totalNumDiscs}`),
-    //     roundsSolved: 0,
-    //     bestNumMoves: moves,
-    //   };
-    //   winRecord.push(newCategory);
-    // }
-    // winRecord.forEach((discCategory) => {
-    //   if (discCategory.numDiscs == totalNumDiscs) {
-    //     discCategory.roundsSolved++;
-    //     if (
-    //       discCategory.bestNumMoves > moves ||
-    //       discCategory.bestNumMoves == 0
-    //     ) {
-    //       discCategory.bestNumMoves = moves;
-    //     }
-    //   }
-    // });
     stopTimer();
     // win message
     winText.innerHTML = `Congratulations! <br>You solved the ${totalNumDiscs}-disc puzzle with ${moves} moves. <br>${time.innerText}`;
-    winModal.style.display = "block";
-  }
-  console.log(puzzleNotYetSolved);
-};
-
-//  CLICK HANDLERS
-const towerClickHandler = (e) => {
-  let selectedTower = e.currentTarget.id;
-  selectedTowers.push(selectedTower);
-  if (selectedTowers.length === 2) {
-    if (checkMoveIfValid(selectedTowers[0], selectedTowers[1])) {
-      move(selectedTowers[0], selectedTowers[1]);
-      checkForWinAndNextSteps();
-    }
-    selectedTowers = [];
-  }
-};
-const restartBtnClicked = (e) => {
-  puzzleNotYetSolved = true;
-  initGameSpace();
-  resetTimer();
-  document.querySelector(".container").addEventListener("click", startTimer);
-};
-const solvePuzzle = async () => {
-  initGameSpace();
-  let towerA = "towerOne";
-  let towerB = "towerTwo";
-  let towerC = "towerThree";
-
-  let countOfEmptyTowers =
-    towers.filter((tower) => tower.discs.length === 0).length - 1;
-
-  while (countOfEmptyTowers < 2) {
-    let numAutoMoves = moves + 1;
-    if (numAutoMoves % 3 === 1) {
-      await new Promise((res) => {
-        autoMove(towerA, towerC);
-        setTimeout(() => {
-          res();
-        }, 500);
-      });
-    } else if (numAutoMoves % 3 === 2) {
-      await new Promise((res) => {
-        autoMove(towerA, towerB);
-        setTimeout(() => {
-          res();
-        }, 500);
-      });
-    } else if (numAutoMoves % 3 === 0) {
-      await new Promise((res) => {
-        autoMove(towerB, towerC);
-        setTimeout(() => {
-          res();
-        }, 500);
-      });
-    }
-    countOfEmptyTowers = towers.filter(
-      (tower) => tower.discs.length === 0
-    ).length;
+    winModal.classList.toggle("hide");
   }
 };
 
@@ -309,6 +222,93 @@ function resetTimer() {
   timer.innerHTML = "Time: 00:00:00";
 }
 
+//  CLICK HANDLERS
+const towerClickHandler = (e) => {
+  let selectedTower = e.currentTarget.id;
+  selectedTowers.push(selectedTower);
+  if (selectedTowers.length === 2) {
+    if (checkMoveIfValid(selectedTowers[0], selectedTowers[1])) {
+      move(selectedTowers[0], selectedTowers[1]);
+      checkForWinAndNextSteps();
+    }
+    selectedTowers = [];
+  }
+};
+const restartBtnClicked = (e) => {
+  puzzleNotYetSolved = true;
+  initGameSpace();
+  resetTimer();
+  document.querySelector(".container").addEventListener("click", startTimer);
+};
+const solvePuzzle = async () => {
+  initGameSpace();
+  let towerA = "towerOne";
+  let towerB = "towerTwo";
+  let towerC = "towerThree";
+
+  let countOfEmptyTowers =
+    towers.filter((tower) => tower.discs.length === 0).length - 1;
+
+  while (countOfEmptyTowers < 2) {
+    let numAutoMoves = moves + 1;
+    if (numAutoMoves % 3 === 1) {
+      await new Promise((res) => {
+        autoMove(towerA, towerC);
+        setTimeout(() => {
+          res();
+        }, 500);
+      });
+    } else if (numAutoMoves % 3 === 2) {
+      await new Promise((res) => {
+        autoMove(towerA, towerB);
+        setTimeout(() => {
+          res();
+        }, 500);
+      });
+    } else if (numAutoMoves % 3 === 0) {
+      await new Promise((res) => {
+        autoMove(towerB, towerC);
+        setTimeout(() => {
+          res();
+        }, 500);
+      });
+    }
+    countOfEmptyTowers = towers.filter(
+      (tower) => tower.discs.length === 0
+    ).length;
+  }
+};
+const seeGameStats = () => {
+  const statsContent = document.querySelector("#gameStatsContent");
+  statsContent.innerHTML = "";
+  if (!storedWins || storedWins.length === 0) {
+    let playMessage = document.createElement("p");
+    playMessage.innerText =
+      "Play to start seeing how awesome you could be at this puzzle";
+  } else {
+    const table = document.createElement("table");
+    table.innerHTML = `
+    <thead>
+      <tr>
+        <th>Discs</th>
+        <th>Rounds Solved</th>
+        <th>Best # Moves</th>
+      </tr>
+    </thead>`;
+
+    storedWins.forEach((discRecord) => {
+      const infoRow = document.createElement("tr");
+      infoRow.innerHTML = `<td>${discRecord.numDiscs}</td>
+      <td>${discRecord.roundsSolved}</td>
+      <td>${discRecord.bestNumMoves}</td>`;
+      table.append(infoRow);
+    });
+    statsContent.prepend(table);
+  }
+  console.log(storedWins);
+  statsModal.classList.toggle("hide");
+};
+
 initGameSpace();
 // EVENT LISTENERS
 // Start timer on first click
@@ -324,7 +324,7 @@ document
   .addEventListener("click", restartBtnClicked);
 // Listern to close win modal
 document.querySelector("#closeWinMessage").addEventListener("click", () => {
-  winModal.style.display = "none";
+  winModal.classList.toggle("hide");
   initGameSpace();
   resetTimer();
   document.querySelector(".container").addEventListener("click", startTimer);
@@ -337,3 +337,8 @@ document.querySelector("#generateNumDiscs").addEventListener("submit", (e) => {
 });
 // Listen for solve button
 document.querySelector("#solveBtn").addEventListener("click", solvePuzzle);
+document.querySelector("#statsBtn").addEventListener("click", seeGameStats);
+
+document.querySelector("#closeGameStats").addEventListener("click", () => {
+  statsModal.classList.toggle("hide");
+});

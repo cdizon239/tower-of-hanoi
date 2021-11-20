@@ -36,7 +36,37 @@ ul {
   margin: 0 auto;
 }
 
+table {
+  background-color: oldlace;
+  margin: 1em auto;
+  width: 70%;
+  border-spacing: 0;
+}
+
+tr {
+  border-bottom: 2px solid grey;
+}
+
+td,
+th {
+  border-bottom: 1px solid grey;
+  padding: 0.5em;
+}
+th {
+  background: moccasin;
+}
+tr:nth-child(even) {
+  background: papayawhip;
+}
+tr:hover {
+  background: blanchedalmond;
+  color: #52796f;
+}
+
 /*  CLASSES */
+.hide {
+  display: none;
+}
 .container {
   background: #e9ccbe;
   margin: 0 5%;
@@ -138,7 +168,7 @@ ul {
   height: 100%;
   width: 100%;
   z-index: 10;
-  display: none;
+  /* display: none; */
 }
 
 /*  IDs */
