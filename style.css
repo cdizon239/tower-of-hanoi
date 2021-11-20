@@ -1,4 +1,4 @@
-/* @import url(//db.onlinewebfonts.com/c/02d8f1743ede250c7c9865f1574d7cc6?family=Circular+Book); */
+/* ELEMENTS */
 header {
   margin: 2%;
 }
@@ -75,8 +75,13 @@ tr:hover {
   justify-content: space-evenly;
   height: 30vh;
 }
-.homepage,
-.homepage-container {
+.homepage {
+  background-image: url("./images/tohBackground.png");
+  background-color: #f9efed;
+  background-size: contain;
+  background-position-x: right;
+  background-position-y: top;
+  background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -89,7 +94,6 @@ tr:hover {
 .homepage a {
   animation: buttonGrow 2s infinite;
 }
-
 @keyframes buttonGrow {
   0%,
   100% {
@@ -109,7 +113,6 @@ tr:hover {
   border-radius: 6px;
   padding: 10px 20px 15px 20px;
 }
-
 .modal-textbox {
   max-width: 70%;
   margin: 150px auto;
@@ -119,10 +122,10 @@ tr:hover {
 .story p {
   text-align: justify;
   margin-top: 1%;
-  padding: 0 4%;
+  padding: 0 7%;
 }
 .story {
-  background: #cad2c5;
+  background: #e9ccbe;
   display: flex;
   width: 90vw;
   flex-direction: column;
