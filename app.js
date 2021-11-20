@@ -28,7 +28,6 @@ const initGameSpace = () => {
     { name: "towerTwo", discs: [] },
     { name: "towerThree", discs: [] },
   ];
-
   document.querySelectorAll(".tower-top").forEach((tower) => {
     tower.innerHTML = "";
     let discs = document.createElement("ul");
@@ -44,8 +43,6 @@ const initGameSpace = () => {
     disc.style.width = `${(maxDiscWidth / totalNumDiscs) * (i + 1)}vw`;
     towerOne.querySelector("ul").append(disc);
   }
-  // document.querySelector('#disc1').style.position = 'relative'
-  // document.querySelector('#disc1').style.top = '-3rem'
 };
 
 // GAME HELPER FUNCTIONS
@@ -69,10 +66,8 @@ const checkMoveIfValid = (firstTowerName, secondTowerName) => {
     (fromDisk < toDisk || isEmptyTower(secondTowerName)) &&
     !isEmptyTower(firstTowerName)
   ) {
-    console.log("move from", fromDisk, "to", toDisk, " can move");
     return true;
   } else {
-    console.log("move from", fromDisk, "to", toDisk, " not valid");
     return false;
   }
 };
@@ -108,7 +103,6 @@ const autoMove = (firstTowerName, secondTowerName) => {
   let secondTowerNumDiscs = towers.filter(
     (tower) => tower.name === secondTowerName
   )[0].discs.length;
-
   if (
     (firstTowerNumDiscs === 0 && secondTowerNumDiscs > 0) ||
     grabTopmostDisc(firstTowerName) > grabTopmostDisc(secondTowerName)
@@ -124,7 +118,7 @@ const storeScore = () => {
   if (!storedWins) {
     storedWins = [];
   }
-  // check if discNum category is not inlist, make a new object and push to list
+  // check if discNum category is not on list, make a new object and push to list
   if (
     storedWins.filter((discCategory) => discCategory.numDiscs == totalNumDiscs)
       .length === 0
@@ -285,6 +279,7 @@ const seeGameStats = () => {
     let playMessage = document.createElement("p");
     playMessage.innerText =
       "Play to start seeing how awesome you could be at this puzzle";
+    statsContent.prepend(playMessage);
   } else {
     const table = document.createElement("table");
     table.innerHTML = `
