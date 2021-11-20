@@ -129,6 +129,9 @@ This is an example of how to list things you need to use the software and how to
 Game is available on Desktop and Mobile. Turns out there's always a fun way you could exercise your brain wherever you are!
 
 ![Landing Page](./images/landingPage.png)
+![Mobile View](./images/mobileView.png)
+![Mobile View](./images/scoreBoard.png)
+![In Game Play](./images/inGame.png)
 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
